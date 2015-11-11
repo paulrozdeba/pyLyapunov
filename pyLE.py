@@ -41,7 +41,7 @@ def computeLE(f, fjac, x0, t, p=(), ttrans=None, method='dop853'):
         Phi = S[D:]
         return np.append(f(t,x,p), dPhi_dt(t,Phi,x))
 
-    # set up integrator for model state
+    # set up integrator
     itg = ode(dSdt)
     itg.set_integrator(method)
 
@@ -67,7 +67,6 @@ def computeLE(f, fjac, x0, t, p=(), ttrans=None, method='dop853'):
     Ssol = np.zeros((N,D*(D+1)), dtype='float')
     Ssol[0] = S0
     for i,tnext in enumerate(t[1:]):
-        # iterate model state
         itg.integrate(tnext)
         Ssol[i+1] = itg.y
         # perform QR decomposition on Phi
