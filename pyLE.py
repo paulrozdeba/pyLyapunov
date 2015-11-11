@@ -48,7 +48,7 @@ def computeLE(f, fjac, x0, t, p=(), ttrans=None, method='dop853'):
     # integrate transient behavior
     Phi0 = np.eye(D, dtype='float').flatten()
     S0 = np.append(x0, Phi0)
-    if ttrans != None:
+    if ttrans is not None:
         itg.set_initial_value(S0, ttrans[0])
         Strans = np.zeros((Ntrans,D*(D+1)), dtype='float')
         Strans[0] = S0
@@ -72,9 +72,9 @@ def computeLE(f, fjac, x0, t, p=(), ttrans=None, method='dop853'):
         # perform QR decomposition on Phi
         rPhi = np.reshape(Ssol[i+1,D:], (D,D))
         Q,R = np.linalg.qr(rPhi)
-        itg._y = np.append(Ssol[i+1,:D],Q.flatten())
-        LE[i] = np.abs(np.diag(R)).T
+        itg.set_initial_value(np.append(Ssol[i+1,:D],Q.flatten()), tnext)
+        LE[i] = np.abs(np.diag(R))
 
     # compute LEs
-    LE = np.cumsum(np.log(LE),axis=0) / np.tile(t[1:], (D,1)).T
+    LE = np.cumsum(np.log(LE),axis=0) / np.tile(t[1:],(D,1)).T
     return LE
