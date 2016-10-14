@@ -49,6 +49,7 @@ def computeLE(f, fjac, x0, t, p=(), ttrans=None, method='dop853'):
     Phi0 = np.eye(D, dtype='float').flatten()
     S0 = np.append(x0, Phi0)
     if ttrans is not None:
+        print("Integrating transient behavior...")
         itg.set_initial_value(S0, ttrans[0])
         Strans = np.zeros((Ntrans,D*(D+1)), dtype='float')
         Strans[0] = S0
@@ -66,6 +67,8 @@ def computeLE(f, fjac, x0, t, p=(), ttrans=None, method='dop853'):
     itg.set_initial_value(S0, t[0])
     Ssol = np.zeros((N,D*(D+1)), dtype='float')
     Ssol[0] = S0
+
+    print("Integrating system for LE calculation...")
     for i,tnext in enumerate(t[1:]):
         itg.integrate(tnext)
         Ssol[i+1] = itg.y
@@ -76,5 +79,6 @@ def computeLE(f, fjac, x0, t, p=(), ttrans=None, method='dop853'):
         LE[i] = np.abs(np.diag(R))
 
     # compute LEs
+    print("Computing LE spectrum...")
     LE = np.cumsum(np.log(LE),axis=0) / np.tile(t[1:],(D,1)).T
     return LE
