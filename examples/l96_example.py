@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from l96 import l96, l96jac
-from pyLE import computeLE
+from pyLyapunov import computeLE
 
 plotspec = False
 
