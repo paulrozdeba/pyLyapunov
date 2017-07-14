@@ -1,4 +1,6 @@
-pyLE contains just one function so far, computeLE.  It computes the Lyapunov 
+# pyLyapunov
+
+pyLyapunov contains just one function so far, computeLE.  It computes the Lyapunov 
 exponents for a set of ODEs.
 
 See the example files for guidance on how to run the calculation.  Importantly, 
